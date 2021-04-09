@@ -1,11 +1,56 @@
+import Foundation
+
 print("Welcome to the UW Calculator Playground")
 
 func calculate(_ args: [String]) -> Int {
-    return -1
+    let currCase = args[args.count-1]
+    var result = 0;
+    if (currCase == "count") {
+        return args.count - 1;
+    } else if (currCase == "avg") {
+        if (args[0] == "avg") {
+            return 0;
+        }
+        for arg in args {
+            result += Int(arg) ?? 0
+        }
+        return (result / (args.count - 1))
+    } else if (currCase == "fact") {
+        if (args[0] == "fact") {
+            return 0;
+        }
+        let num = Int(args[0]) ?? 0
+        result = 1;
+        if num == 0 {
+            return result;
+        } else {
+            for n in 1...num {
+                result = result * n;
+            }
+        }
+    }
+    
+    for arg in args {
+        if (arg == "+") {
+            result += (Int(args[0]) ?? 0) + (Int(args[2]) ?? 0)
+        } else if (arg == "-") {
+            result += (Int(args[0]) ?? 0) - (Int(args[2]) ?? 0)
+        } else if (arg == "*") {
+            result += (Int(args[0]) ?? 0) * (Int(args[2]) ?? 0)
+        } else if (arg == "/") {
+            result += (Int(args[0]) ?? 0) / (Int(args[2]) ?? 0)
+        } else if (arg == "%") {
+            result += (Int(args[0]) ?? 0) % (Int(args[2]) ?? 0)
+        }
+    }
+    
+    return result;
 }
 
+
 func calculate(_ arg: String) -> Int {
-    return -1
+    let array = arg.components(separatedBy: " ");
+    return calculate(array)
 }
 
 // -------------------------------------------
@@ -20,32 +65,32 @@ calculate(["2", "/", "2"]) == 1
 calculate(["2", "%", "2"]) == 0
 
 calculate(["1", "2", "3", "count"]) == 3
-calculate(["1", "2", "3", "4", "5", "count"]) == 5
-calculate(["count"]) == 0
+ calculate(["1", "2", "3", "4", "5", "count"]) == 5
+ calculate(["count"]) == 0
 
-calculate(["1", "2", "3", "4", "5", "avg"]) == 3
-    // 15 / 5 = 3
-calculate(["2", "2", "4", "4", "avg"]) == 3
-    // 12 / 4 = 3
-calculate(["2", "avg"]) == 2
-    // 2 / 1 = 2
-calculate(["avg"]) == 0
-    // 0 / 0 = 0 (not really, but it's an edge case
+ calculate(["1", "2", "3", "4", "5", "avg"]) == 3
+     // 15 / 5 = 3
+ calculate(["2", "2", "4", "4", "avg"]) == 3
+     // 12 / 4 = 3
+ calculate(["2", "avg"]) == 2
+     // 2 / 1 = 2
+ calculate(["avg"]) == 0
+     // 0 / 0 = 0 (not really, but it's an edge case
 
-calculate(["0", "fact"]) == 1
-calculate(["1", "fact"]) == 1
-calculate(["2", "fact"]) == 2 // 2*1
-calculate(["5", "fact"]) == 120 // 5*4*3*2*1
-calculate(["fact"]) == 0
+ calculate(["0", "fact"]) == 1
+ calculate(["1", "fact"]) == 1
+ calculate(["2", "fact"]) == 2 // 2*1
+ calculate(["5", "fact"]) == 120 // 5*4*3*2*1
+ calculate(["fact"]) == 0
 
-calculate("2 + 2") == 4
-calculate("2 * 2") == 4
-calculate("2 - 2") == 0
-calculate("2 / 2") == 1
+ calculate("2 + 2") == 4
+ calculate("2 * 2") == 4
+ calculate("2 - 2") == 0
+ calculate("2 / 2") == 1
 
-calculate("1 2 3 4 5 count") == 5
-calculate("1 2 3 4 5 avg") == 3
-calculate("5 fact") == 120
+ calculate("1 2 3 4 5 count") == 5
+ calculate("1 2 3 4 5 avg") == 3
+ calculate("5 fact") == 120
 
 // -------------------------------------------
 // These are extra credit tests; commented out
