@@ -98,7 +98,7 @@ calculate(["1", "2", "3", "count"]) == 3
 
 // Implement calculate([String]) and calculate(String)
 // to handle negative numbers
-/*
+
 calculate(["2", "+", "-2"]) == 0
 calculate(["2", "-", "-2"]) == 4
 calculate(["2", "*", "-2"]) == -4
@@ -113,16 +113,58 @@ calculate("2 - -2") == 4
 calculate("-2 / 2") == -1
 
 calculate("1 -2 3 -4 5 count") == 5
-*/
+
  
 // Implement calculate([String]) and calculate(String)
 // to use floating-point values
-/*
+
 func calculate(_ args: [String]) -> Double {
-    return -1.0
+    let currCase = args[args.count-1]
+    var result = 0.0;
+    if (currCase == "count") {
+        return Double(args.count - 1);
+    } else if (currCase == "avg") {
+        if (args[0] == "avg") {
+            return 0;
+        }
+        for arg in args {
+            result += Double(arg) ?? 0
+        }
+        return Double((result / Double((args.count - 1))))
+    } else if (currCase == "fact") {
+        if (args[0] == "fact") {
+            return 0;
+        }
+        let num = Int(args[0]) ?? 0
+        result = 1;
+        if num == 0 {
+            return result;
+        } else {
+            for n in 1...num {
+                result = result * Double(n);
+            }
+        }
+    }
+    
+    for arg in args {
+        if (arg == "+") {
+            result = (Double(args[0]) ?? 0) + (Double(args[2]) ?? 0)
+        } else if (arg == "-") {
+            result = (Double(args[0]) ?? 0) - (Double(args[2]) ?? 0)
+        } else if (arg == "*") {
+            result = (Double(args[0]) ?? 0) * (Double(args[2]) ?? 0)
+        } else if (arg == "/") {
+            result = (Double(args[0]) ?? 0) / (Double(args[2]) ?? 0)
+        } else if (arg == "%") {
+            result = (Double(args[0]) ?? 0).truncatingRemainder(dividingBy: (Double(args[2]) ?? 0))
+        }
+    }
+    return result;
 }
+
 func calculate(_ arg: String) -> Double {
-    return -1.0
+    return calculate(arg.components(separatedBy: " "))
+    
 }
 
 calculate(["2.0", "+", "2.0"]) == 4.0
@@ -132,4 +174,4 @@ calculate(["2.5", "*", "2.5"]) == 6.25
 calculate(["2.0", "/", "2.0"]) == 1.0
 calculate(["2.0", "%", "2.0"]) == 0.0
 calculate("1.0 2.0 3.0 4.0 5.0 count") == 5
-*/
+
